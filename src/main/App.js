@@ -1,3 +1,33 @@
-import React from 'react';
+import React, {Component, Fragment} from 'react';
+import { connect } from 'react-redux';
 
-export default () => <h1>editor is going to be here</h1>;
+import BlockStore from '../BlockStore';
+import SvgCanvas from '../SvgCanvas';
+
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  // closeDateIntervalPicker: () => dispatch(closeDateIntervalPicker()),
+  // useDateInterval: (toggle) => dispatch(useDateInterval(toggle))
+});
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <SvgCanvas />
+        <BlockStore />
+      </Fragment>
+    );
+  }
+}
+App.propTypes = {
+
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
