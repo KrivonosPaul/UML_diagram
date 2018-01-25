@@ -48,7 +48,11 @@ class BlockStore extends Component {
         <span dangerouslySetInnerHTML={isOpened ? {__html: '&#9668;'} : {__html: '&#9658;'}}></span>
       </div>
       <div className={Styles.previewZone}>
-        
+        <svg className={Styles.svgPreviewBox}>
+          <Rectangle />
+          <Circle />
+          <Ellipse />
+        </svg>
       </div>
     </div>;
   }

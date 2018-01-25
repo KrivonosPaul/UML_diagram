@@ -1,14 +1,17 @@
 import React from 'react';
+import {reassignDefault} from '../helperFunctions';
+import {DEFAUL_ATTRIBUTES} from '../constants';
 
-export default (props) => <ellipse
-  id="SvgjsEllipse1075"
-  rx="50" ry="40"
-  cx="595" cy="204"
-  fillOpacity="1"
-  fill="#ffffff"
-  strokeLinejoin="round"
-  strokeLinecap="round"
-  strokeOpacity="1"
-  stroke="#000000"
-  strokeWidth="1">
-</ellipse>;
+const defaultProps = {
+  rx: '50',
+  ry: '30',
+  cx: '50',
+  cy: '235',
+  ...DEFAUL_ATTRIBUTES
+};
+
+export default (props) => {
+  reassignDefault(defaultProps, props);
+  return <ellipse
+  {...defaultProps}>
+</ellipse>;}

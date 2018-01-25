@@ -4,4 +4,9 @@ export const reassignDefault = (def, actual) => {
       def[elem] = actual[elem];
     }
   });
+  Object.keys(actual).forEach((elem) => {
+    if(!def[elem]){
+      def[elem] = actual[elem];
+    }
+  });
 };

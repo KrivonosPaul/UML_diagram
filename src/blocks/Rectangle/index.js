@@ -1,31 +1,17 @@
 import React from 'react';
+import {reassignDefault} from '../helperFunctions';
+import {DEFAUL_ATTRIBUTES} from '../constants';
 
 const defaultProps = {
-  width: '100'
-  height: '100'
-  x: '50',
-  y: '50',
-  fillOpacity: '1',
-  fill: "#ffffff",
-  strokeLinejoin: "round",
-  strokeLinecap: "round",
-  strokeOpacity: '1',
-  stroke: "#000000",
-  strokeWidth: '1'
+  width: '90',
+  height: '90',
+  x: '5',
+  y: '5',
+  ...DEFAUL_ATTRIBUTES
 };
 
 export default (props) => {
-
+  reassignDefault(defaultProps, props);
   return <rect
-  id="SvgjsRect1060"
-  x='300' y='300'
-  width="100"
-  height="100"
-  fillOpacity="1"
-  fill="#ad00ad"
-  strokeLinejoin="round"
-  strokeLinecap="round"
-  strokeOpacity="1"
-  stroke="#00dd00"
-  strokeWidth="10">
+  {...defaultProps}>
 </rect>;}
