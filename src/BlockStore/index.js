@@ -5,16 +5,16 @@ import classnames from 'classnames';
 import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
-import ConnectingLine from '../blocks/ConnectingLine';
+import {addElement} from './action_reducer';
 
 import Styles from './styles.css';
 
 const mapStateToProps = (state) => ({
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // closeDateIntervalPicker: () => dispatch(closeDateIntervalPicker()),
-  // useDateInterval: (toggle) => dispatch(useDateInterval(toggle))
+  addElement: (nodeName, point) => dispatch(addElement(nodeName, point))
 });
 
 class BlockStore extends Component {
@@ -23,12 +23,31 @@ class BlockStore extends Component {
     this.state = {
       opened: false
     };
+    this.StoreElementsBehaviour = {
+      onMouseDown: (evt) => {this.onMouseDownHendler(evt)},
+      onMouseMove: (evt) => {this.onMouseMoveHendler(evt)},
+      onMouseUp: (evt) => {this.onMouseUpHendler(evt)},
+      onMouseLeave: (evt) => {this.onMouseLeaveHendler(evt)}
+    };
   }
 
-  toggleBlockStore(){
+  toggleBlockStore(evt){
     this.setState({
       isOpened: !this.state.isOpened
     });
+  }
+
+  onMouseDownHendler(evt){
+    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}); // dispatched an event of addding Element onto canvas
+    this.setState({
+      isOpened: !this.state.isOpened
+    });
+  }
+  onMouseMoveHendler(evt){
+  }
+  onMouseUpHendler(evt){
+  }
+  onMouseLeaveHendler(evt){
   }
 
   render() {
@@ -48,10 +67,10 @@ class BlockStore extends Component {
         <span dangerouslySetInnerHTML={isOpened ? {__html: '&#9668;'} : {__html: '&#9658;'}}></span>
       </div>
       <div className={Styles.previewZone}>
-        <svg className={Styles.svgPreviewBox}>
-          <Rectangle />
-          <Circle />
-          <Ellipse />
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" svgjs="http://svgjs.com/svgjs" className={Styles.svgPreviewBox}>
+          <Rectangle {...this.StoreElementsBehaviour} />
+          <Circle {...this.StoreElementsBehaviour} />
+          <Ellipse {...this.StoreElementsBehaviour} />
         </svg>
       </div>
     </div>;

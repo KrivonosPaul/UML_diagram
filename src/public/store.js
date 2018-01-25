@@ -1,13 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 
-
-const testReducer =  (state = [], action) => {
-  return state;
-}
+import {blockStore} from '../BlockStore/action_reducer';
 
 const reducer = combineReducers({
- testReducer
-})
+ blockStore
+});
 const store = createStore(
  reducer
 );

@@ -1,16 +1,16 @@
 import React from 'react';
-import {reassignDefault} from '../helperFunctions';
-import {DEFAUL_ATTRIBUTES} from '../constants';
+import {reassignDefault, defaulAttributesFabrick} from '../helperFunctions';
+
 
 const defaultProps = {
   r: '50',
   cx: '50',
   cy: '150',
-  ...DEFAUL_ATTRIBUTES
+  ...defaulAttributesFabrick()
 };
 
 export default (props) => {
-  reassignDefault(defaultProps, props);
+  const newProps = reassignDefault(defaultProps, props);
   return <circle
-  {...defaultProps}>
+  {...newProps}>
 </circle>;}

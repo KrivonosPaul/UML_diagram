@@ -5,15 +5,14 @@ import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine'
 
+let num = 0;
+const getNextKey = () => {
+  return num++;
+}
 const width = document.documentElement.clientWidth;// window.innerWidth;
 const height = document.documentElement.clientHeight;// window.innerHeight;
-export default (props) => <svg width={width} height={height}>
-<Rectangle x="300" y="300" stroke={'green'} />
-
+export default (props) => <svg id="mainSVGCanvas" width={width} height={height}>
+  {props.blocks.map((element)=>{
+    return <element.component key={getNextKey()} {...element.properties}/>
+  })}
 </svg>;
-
-/*
-<Rectangle x="300" y="300" stroke={'green'} />
-<Circle cx="500" cy="500" stroke={'blue'} />
-<Ellipse cx="200" cy="200" stroke={'red'} />
-*/
