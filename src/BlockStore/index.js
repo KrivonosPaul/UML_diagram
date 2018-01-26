@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
-import {addElement} from './action_reducer';
+import {addElement} from './actions';
 
 import Styles from './styles.css';
 

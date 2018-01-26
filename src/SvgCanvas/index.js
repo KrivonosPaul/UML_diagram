@@ -6,7 +6,9 @@ import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine';
 import {randomId} from '../blocks/helperFunctions';
+import {toggleEditing} from './actions';
 
+const SVG_CANVAS_ID = 'mainSVGCanvas';
 const blockElements = (element) => {
   const elementObject = {
     rect: {
@@ -32,20 +34,18 @@ const blockElements = (element) => {
           }
   }
   const prepared = elementObject[element.nodeName];
-  prepared.properties.isdragging = 'true';
-  prepared.properties.transx = element.point.x;
-  prepared.properties.transy = element.point.y;
-  prepared.properties.id = element.id;
+  prepared.properties = {...prepared.properties, ...element.properties}
   return prepared;
 };
 
 const mapStateToProps = (state) => {
   return {
-    blocks: state.blockStore.blocks
+    blocks: state.blocks
   }
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  toggleEditing: (elementId) => dispatch(toggleEditing(elementId))
 });
 
 class SvgCanvas extends Component {
@@ -53,13 +53,27 @@ class SvgCanvas extends Component {
     super(props);
     this.width = document.documentElement.clientWidth;// window.innerWidth;
     this.height = document.documentElement.clientHeight;// window.innerHeight;
+
+    this.closeDashboard = this.closeDashboard.bind(this);
   }
+
+  closeDashboard(evt){
+    if(evt.target.id !== SVG_CANVAS_ID) {
+      this.props.toggleEditing(evt.target.id);
+    } else {
+      this.props.toggleEditing();
+    }
+  }
+
   render() {
     return (
-      <svg id="mainSVGCanvas" width={this.width} height={this.height}>
+      <svg id={SVG_CANVAS_ID} width={this.width} height={this.height} onClick={this.closeDashboard}>
         {this.props.blocks.map((element)=>{
           const Element = blockElements(element);
-          return <Element.component key={Element.properties.id} {...Element.properties}/>
+          return <Element.component
+            key={element.properties.id}
+            {...Element.properties}
+            />
         })}
       </svg>
     );

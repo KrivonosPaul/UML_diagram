@@ -1,0 +1,17 @@
+.dashboard {
+  position: fixed;
+  line-height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  left: 50%;
+  transform: translate(-50%);
+  border-radius: 0 0 10px 10px;
+  top: -40px;
+  height: 40px;
+  opacity: 0.7;
+  background-color: #b8b8b8;
+  transition: top 0.2s ease-out 0s;
+}
+.opened {
+  top: 0;
+}

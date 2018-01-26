@@ -29,7 +29,6 @@ export const defaulAttributesFabrick = () => ({
   onMouseMove: (evt) => onMouseMoveHandler(evt),
   onMouseUp: (evt) => onMouseUpHandler(evt),
   onMouseLeave: (evt) => onMouseLeaveHandler(evt),
-  onClick: (evt) => onClickHandler(evt)
 });
 
 const onMouseDownHandler = (evt) => {
@@ -57,6 +56,7 @@ const onMouseUpHandler = (evt) => {
     evt.target.removeAttribute('transx');
     evt.target.removeAttribute('transy');
     evt.stopPropagation();
+    evt.preventDefault();
   }
 };
 const onMouseLeaveHandler = (evt) => {
@@ -64,8 +64,3 @@ const onMouseLeaveHandler = (evt) => {
     onMouseUpHandler(evt);
   }
 };
-const onClickHandler = (evt) => {
-  if (!evt.target.getAttribute('isdragging')) {
-    console.log('going to edit');
-  }
-}

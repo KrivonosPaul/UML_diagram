@@ -1,12 +1,14 @@
 import { createStore, combineReducers } from 'redux';
+import {reducer} from '../main/reducer';
 
-import {blockStore} from '../BlockStore/action_reducer';
+const initialState = {
+  blocks:[],
+  currentIndex: -1
+}
 
-const reducer = combineReducers({
- blockStore
-});
 const store = createStore(
- reducer
+ reducer,
+ initialState
 );
 
 export default store;
