@@ -45,8 +45,13 @@ const onMouseMoveHandler = (evt) => {
 };
 const onMouseUpHandler = (evt) => {
   evt.target.removeAttribute('isdragging');
-  evt.target.setAttribute('x', evt.clientX - parseInt(evt.target.getAttribute('transx')) + parseInt(evt.target.getAttribute('x')));
-  evt.target.setAttribute('y', evt.clientY - parseInt(evt.target.getAttribute('transy')) + parseInt(evt.target.getAttribute('y')));
+  if (evt.target.getAttribute('x')){
+    evt.target.setAttribute('x', evt.clientX - parseInt(evt.target.getAttribute('transx')) + parseInt(evt.target.getAttribute('x')));
+    evt.target.setAttribute('y', evt.clientY - parseInt(evt.target.getAttribute('transy')) + parseInt(evt.target.getAttribute('y')));
+  } else if (evt.target.getAttribute('cx')) {
+    evt.target.setAttribute('cx', evt.clientX - parseInt(evt.target.getAttribute('transx')) + parseInt(evt.target.getAttribute('cx')));
+    evt.target.setAttribute('cy', evt.clientY - parseInt(evt.target.getAttribute('transy')) + parseInt(evt.target.getAttribute('cy')));
+  }
   evt.target.removeAttribute('transform');
   evt.target.removeAttribute('transx');
   evt.target.removeAttribute('transy');
