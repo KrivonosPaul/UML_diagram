@@ -23,10 +23,6 @@ export const addElement = (nodeName, point) => {
 export const blockStore =  (state={blocks:[]}, action) => {
   switch (action.type) {
     case ADD_ELEMENT: {
-      // const newBlock = blockElements[action.data.nodeName];
-      // newBlock.properties.transx = action.data.point.x;
-      // newBlock.properties.transy = action.data.point.y;
-      // newBlock.properties.id = action.data.id;
       return {blocks: [...state.blocks, action.data]};
     }
     default: {
