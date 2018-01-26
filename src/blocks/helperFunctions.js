@@ -1,4 +1,6 @@
-
+export const randomId = () => {
+  return `${Math.floor(Math.random()*1000) + 1}_${Math.floor(Math.random()*1000) + 1}`;
+};
 
 export const reassignDefault = (def, actual) => {
   const propsToReturn = {...def};
@@ -14,7 +16,6 @@ export const reassignDefault = (def, actual) => {
   });
   return propsToReturn;
 };
-
 
 export const defaulAttributesFabrick = () => ({
   fillOpacity: '0.3',

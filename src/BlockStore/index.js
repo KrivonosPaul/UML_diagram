@@ -38,7 +38,7 @@ class BlockStore extends Component {
   }
 
   onMouseDownHendler(evt){
-    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}); // dispatched an event of addding Element onto canvas
+    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}); // dispatched an action of addding Element onto canvas
     this.setState({
       isOpened: !this.state.isOpened
     });
