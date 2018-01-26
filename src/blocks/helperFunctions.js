@@ -34,24 +34,26 @@ export const defaulAttributesFabrick = () => ({
 
 const onMouseDownHandler = (evt) => {
   evt.target.setAttribute('isdragging', true);
-  if (!evt.target.getAttribute('transx') && !evt.target.getAttribute('transy')) {
-    evt.target.setAttribute('transx', evt.clientX);
-    evt.target.setAttribute('transy', evt.clientY);
-  }
+  evt.target.setAttribute('transx', evt.clientX);
+  evt.target.setAttribute('transy', evt.clientY);
 };
 const onMouseMoveHandler = (evt) => {
   if (evt.target.getAttribute('isdragging')) {
     evt.target.setAttribute('transform',
     `translate(${evt.clientX - evt.target.getAttribute('transx')}, ${evt.clientY - evt.target.getAttribute('transy')})`);
-    // console.log('mouseMove: ' + evt.clientX + ', ' + evt.clientY);
   }
 };
 const onMouseUpHandler = (evt) => {
   evt.target.removeAttribute('isdragging');
+  evt.target.setAttribute('x', evt.clientX - parseInt(evt.target.getAttribute('transx')) + parseInt(evt.target.getAttribute('x')));
+  evt.target.setAttribute('y', evt.clientY - parseInt(evt.target.getAttribute('transy')) + parseInt(evt.target.getAttribute('y')));
+  evt.target.removeAttribute('transform');
+  evt.target.removeAttribute('transx');
+  evt.target.removeAttribute('transy');
 };
 const onMouseLeaveHandler = (evt) => {
   if (evt.target.getAttribute('isdragging')) {
-    evt.target.removeAttribute('isdragging');
+    onMouseUpHandler(evt);
   }
 };
 const onClickHandler = (evt) => {
