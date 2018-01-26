@@ -27,7 +27,7 @@ class App extends Component {
     console.log('App props: ', this.props);
     return (
       <Fragment>
-        <SvgCanvas blocks={this.props.blocks} block/>
+        <SvgCanvas blocks={this.props.blocks}/>
         <BlockStore />
       </Fragment>
     );
