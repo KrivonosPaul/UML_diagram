@@ -6,15 +6,17 @@ import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import {addElement} from './actions';
+import {defaultProperties} from '../blocks/defaultProperties';
+
 
 import Styles from './styles.css';
 
 const mapStateToProps = (state) => ({
-
+  nextIndex: state.blocks.length
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addElement: (nodeName, point) => dispatch(addElement(nodeName, point))
+  addElement: (nodeName, point, nextIndex) => dispatch(addElement(nodeName, point, nextIndex))
 });
 
 class BlockStore extends Component {
@@ -23,11 +25,9 @@ class BlockStore extends Component {
     this.state = {
       opened: false
     };
-    this.StoreElementsBehaviour = {
+    this.StoreElementsDefaultProperties = {
+      ...defaultProperties,
       onMouseDown: (evt) => {this.onMouseDownHendler(evt)},
-      onMouseMove: (evt) => {this.onMouseMoveHendler(evt)},
-      onMouseUp: (evt) => {this.onMouseUpHendler(evt)},
-      onMouseLeave: (evt) => {this.onMouseLeaveHendler(evt)}
     };
   }
 
@@ -38,16 +38,10 @@ class BlockStore extends Component {
   }
 
   onMouseDownHendler(evt){
-    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}); // dispatched an action of addding Element onto canvas
     this.setState({
       isOpened: !this.state.isOpened
     });
-  }
-  onMouseMoveHendler(evt){
-  }
-  onMouseUpHendler(evt){
-  }
-  onMouseLeaveHendler(evt){
+    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}, this.props.nextIndex); // dispatched an action of addding Element onto canvas
   }
 
   render() {
@@ -68,9 +62,9 @@ class BlockStore extends Component {
       </div>
       <div className={Styles.previewZone}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" svgjs="http://svgjs.com/svgjs" className={Styles.svgPreviewBox}>
-          <Rectangle {...this.StoreElementsBehaviour} />
-          <Circle {...this.StoreElementsBehaviour} />
-          <Ellipse {...this.StoreElementsBehaviour} />
+          <Rectangle {...this.StoreElementsDefaultProperties} />
+          <Circle {...this.StoreElementsDefaultProperties} />
+          <Ellipse {...this.StoreElementsDefaultProperties} />
         </svg>
       </div>
     </div>;

@@ -6,7 +6,7 @@ import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine';
 import {randomId} from '../blocks/helperFunctions';
-import {toggleEditing} from './actions';
+import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG} from './actions';
 
 const SVG_CANVAS_ID = 'mainSVGCanvas';
 const blockElements = (element) => {
@@ -45,35 +45,53 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleEditing: (elementId) => dispatch(toggleEditing(elementId))
+  toggleEditing: (elementId) => dispatch(toggleEditing(elementId)),
+  mouseDownOnSVG: (elementId) => dispatch(mouseDownOnSVG(elementId)),
+  mouseMoveOnSVG: (elementId) => dispatch(mouseMoveOnSVG(elementId)),
+  mouseUpOnSVG: (elementId) => dispatch(mouseUpOnSVG(elementId))
 });
 
 class SvgCanvas extends Component {
   constructor(props) {
     super(props);
-    this.width = document.documentElement.clientWidth;// window.innerWidth;
-    this.height = document.documentElement.clientHeight;// window.innerHeight;
-
-    this.closeDashboard = this.closeDashboard.bind(this);
+    this.toggleDashboard = this.toggleDashboard.bind(this);
+    this.mouseDownOnSVG = this.mouseDownOnSVG.bind(this);
+    this.mouseMoveOnSVG = this.mouseMoveOnSVG.bind(this);
+    this.mouseUpOnSVG = this.mouseUpOnSVG.bind(this);
   }
 
-  closeDashboard(evt){
+  toggleDashboard(evt){
     if(evt.target.id !== SVG_CANVAS_ID) {
       this.props.toggleEditing(evt.target.id);
     } else {
       this.props.toggleEditing();
     }
   }
+  mouseDownOnSVG(evt){
+    this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+  }
+  mouseMoveOnSVG(evt){
+    this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
+  }
+  mouseUpOnSVG(evt){
+    this.props.mouseMoveOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+  }
 
   render() {
     return (
-      <svg id={SVG_CANVAS_ID} width={this.width} height={this.height} onClick={this.closeDashboard}>
+      <svg id={SVG_CANVAS_ID} style={{width: '100vw', height: '100vh'}}
+          onClick={this.toggleDashboard}
+          onMouseDown={(evt)=>{this.mouseDownOnSVG(evt)}}
+          onMouseMove={(evt)=>{this.mouseMoveOnSVG(evt)}}
+          onMouseUp={(evt)=>{this.mouseUpOnSVG(evt)}}>
         {this.props.blocks.map((element)=>{
-          const Element = blockElements(element);
-          return <Element.component
-            key={element.properties.id}
-            {...Element.properties}
-            />
+          if (!element.properties.isdeleted) {
+            const Element = blockElements(element);
+            return <Element.component
+              key={element.properties.id}
+              {...Element.properties}
+              />
+          }
         })}
       </svg>
     );

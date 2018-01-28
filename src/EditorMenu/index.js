@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import Styles from './styles.css';
 
 const mapStateToProps = (state) => ({
-  isOpened: (state.currentIndex !== -1),
+  isOpened: (state.currentEditing !== -1),
 
 });
 

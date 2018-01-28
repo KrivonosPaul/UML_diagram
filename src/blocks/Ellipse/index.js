@@ -1,12 +1,12 @@
 import React from 'react';
-import {reassignDefault, defaulAttributesFabrick} from '../helperFunctions';
+import {reassignDefault, defaulAttributesEventHandlers} from '../helperFunctions';
 
 const defaultProps = {
   rx: '50',
   ry: '30',
   cx: '50',
   cy: '235',
-  ...defaulAttributesFabrick()
+  ...defaulAttributesEventHandlers()
 };
 
 export default (props) => {

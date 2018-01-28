@@ -17,14 +17,7 @@ export const reassignDefault = (def, actual) => {
   return propsToReturn;
 };
 
-export const defaulAttributesFabrick = () => ({
-  fillOpacity: '0.3',
-  fill: "#ffffff",
-  strokeLinejoin: "round",
-  strokeLinecap: "round",
-  strokeOpacity: '1',
-  stroke: "#000000",
-  strokeWidth: '1',
+export const defaulAttributesEventHandlers = () => ({
   onMouseDown: (evt) => onMouseDownHandler(evt),
   onMouseMove: (evt) => onMouseMoveHandler(evt),
   onMouseUp: (evt) => onMouseUpHandler(evt),
