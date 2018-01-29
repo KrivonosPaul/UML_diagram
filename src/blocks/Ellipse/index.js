@@ -21,4 +21,6 @@ export default (props) => {
   if (newProps.transform) {
     textProps.transform = newProps.transform;
   }
-  return <Fragment><ellipse  {...newProps}></ellipse><text {...textProps}>TEXT</text></Fragment>;}
+  const textContent = newProps.text ? newProps.text : 'TEXT';
+  delete newProps.text;
+  return <Fragment><ellipse  {...newProps}></ellipse><text {...textProps}>{textContent}</text></Fragment>;}

@@ -1,4 +1,4 @@
-import {CHANGE_STROKE_COLOR, CHANGE_FILL_COLOR, CHANGE_TEXT} from '../main/reducer';
+import {CHANGE_STROKE_COLOR, CHANGE_FILL_COLOR, CHANGE_TEXT, DELETE_BLOCK} from '../main/reducer';
 
 export const changeStrokeColor = (stroke) => {
   return {
@@ -26,3 +26,9 @@ export const changeText = (text) => {
     }
   };
 };
+
+export const deleteBlock = () => {
+  return {
+    type: DELETE_BLOCK
+  }
+}

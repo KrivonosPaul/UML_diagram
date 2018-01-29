@@ -76,7 +76,8 @@ class SvgCanvas extends Component {
             const Comp = componentOfElement[element.nodeName].component;
             return <Comp
               key={element.properties.id}
-              {...element.properties, element.text}
+              {...element.properties}
+              text={element.text}
               />
           }
         })}

@@ -7,8 +7,8 @@ export const STOP_DRAGGING = 'STOP_DRAGGING';
 export const CHANGE_STROKE_COLOR = 'CHANGE_STROKE_COLOR';
 export const CHANGE_FILL_COLOR = 'CHANGE_FILL_COLOR';
 export const CHANGE_TEXT = 'CHANGE_TEXT';
+export const DELETE_BLOCK = 'DELETE_BLOCK';
 
-/*REDUCER*/
 export const reducer =  (state, action) => {
   switch (action.type) {
     case ADD_ELEMENT: {
@@ -80,6 +80,15 @@ export const reducer =  (state, action) => {
       if (~state.currentEditing) {
         const current = newState.blocks[state.currentEditing];
         current.text = action.data.text;
+      }
+      return newState;
+    }
+    case DELETE_BLOCK: {
+      const newState = JSON.parse(JSON.stringify(state));
+      if (~state.currentEditing) {
+        const current = newState.blocks[state.currentEditing];
+        current.properties.isdeleted = 'true';
+        newState.currentEditing = -1;
       }
       return newState;
     }
