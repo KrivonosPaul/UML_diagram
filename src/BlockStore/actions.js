@@ -2,9 +2,6 @@ import {ADD_ELEMENT} from '../main/reducer';
 import {randomId} from '../blocks/helperFunctions';
 import {defaultProperties} from '../blocks/defaultProperties';
 
-// const scrollTop = document.documentElement.scrollTop;
-// const scrollLeft = document.documentElement.scrollLeft;
-
 const initialCoordinates = (offset) => ({
   rect: {
             x: 15 + offset.x,

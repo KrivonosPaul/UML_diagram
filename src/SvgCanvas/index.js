@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
+import Styles from './styles.css';
 import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
@@ -66,7 +67,7 @@ class SvgCanvas extends Component {
 
   render() {
     return (
-      <svg id={SVG_CANVAS_ID} style={{width: '100vw', height: '100vh'}}
+      <svg id={SVG_CANVAS_ID} className={Styles.mainSvgCanvas}
           onClick={this.toggleDashboard}
           onMouseDown={(evt)=>{this.mouseDownOnSVG(evt)}}
           onMouseMove={(evt)=>{this.mouseMoveOnSVG(evt)}}

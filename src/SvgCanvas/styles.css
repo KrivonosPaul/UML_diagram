@@ -1,0 +1,8 @@
+.mainSvgCanvas {
+  width: 100vw;
+  height: 100vh;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
