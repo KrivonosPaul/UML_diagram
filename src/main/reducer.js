@@ -27,12 +27,30 @@ export const reducer =  (state, action) => {
       return {...state, currentEditing: -1};
     }
     case SET_CURRENT_DRAGGING: {
-      // const newState = {...state};
-      // newState.currentDragging = action.data.index;
-      // newState.blocks[action.data.index].transx = action.data.point.x;
-      // newState.blocks[action.data.index].transy = action.data.point.y;
-      // return newState;
-      return state;
+      const newState = {...state};
+      newState.currentDragging = action.data.index;
+      newState.blocks[action.data.index].properties.transx = action.data.point.x;
+      newState.blocks[action.data.index].properties.transy = action.data.point.y;
+      return newState;
+    }
+    case MOVING_ELEMENT: {
+      if (~state.currentDragging) {
+        const newState = {...state};
+        const current = newState.blocks[state.currentDragging];
+        current.transform = `translate(${action.data.point.x - current.properties.transx}, ${action.data.point.y - current.properties.transy})`;
+        return newState;
+      }
+    }
+    case STOP_DRAGGING: {
+      if (~state.currentDragging) {
+        const newState = {...state};
+        const current = newState.blocks[state.currentDragging];
+        current.properties.x = action.data.point.x - parseInt(current.properties.transx) + parseInt(current.properties.x);
+        current.properties.y = action.data.point.y - parseInt(current.properties.transy) + parseInt(current.properties.y);
+        current.transform = '';
+        newState.currentDragging = -1;
+        return newState;
+      }
     }
     default: {
       return state;
