@@ -4,6 +4,9 @@ export const HIDE_DASHBOARD = 'HIDE_DASHBOARD';
 export const SET_CURRENT_DRAGGING = 'SET_CURRENT_DRAGGING';
 export const MOVING_ELEMENT = 'MOVING_ELEMENT';
 export const STOP_DRAGGING = 'STOP_DRAGGING';
+export const CHANGE_STROKE_COLOR = 'CHANGE_STROKE_COLOR';
+export const CHANGE_FILL_COLOR = 'CHANGE_FILL_COLOR';
+export const CHANGE_TEXT = 'CHANGE_TEXT';
 
 /*REDUCER*/
 export const reducer =  (state, action) => {
@@ -36,6 +39,7 @@ export const reducer =  (state, action) => {
         current.properties.transform = `translate(${action.data.point.x - current.properties.transx}, ${action.data.point.y - current.properties.transy})`;
         return newState;
       }
+      return state;
     }
     case STOP_DRAGGING: {
       if (~state.currentDragging) {
@@ -49,10 +53,31 @@ export const reducer =  (state, action) => {
           current.properties.cy = parseInt(action.data.point.y) - parseInt(current.properties.transy) + parseInt(current.properties.cy);
         }
         delete current.properties.transform;
-        current.properties.isdragging = 'false';
+        delete current.properties.isdragging;// = 'false';
         newState.currentDragging = -1;
         return newState;
       }
+      return state;
+    }
+    case CHANGE_STROKE_COLOR: {
+      const newState = JSON.parse(JSON.stringify(state));
+      if (~state.currentEditing) {
+        const current = newState.blocks[state.currentEditing];
+        current.properties.stroke = action.data.stroke;
+      }
+      return newState;
+    }
+    case CHANGE_FILL_COLOR: {
+      const newState = JSON.parse(JSON.stringify(state));
+      if (~state.currentEditing) {
+        const current = newState.blocks[state.currentEditing];
+        current.properties.fill = action.data.fill;
+      }
+      return newState;
+    }
+    case CHANGE_TEXT: {
+      const newState = JSON.parse(JSON.stringify(state));
+      return newState;
     }
     default: {
       return state;
