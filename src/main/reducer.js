@@ -11,16 +11,12 @@ export const reducer =  (state, action) => {
     case ADD_ELEMENT: {
       const newState = {...state};
       newState.blocks = [...newState.blocks, action.data]
+      newState.currentDragging = newState.blocks.length - 1;
       return newState;
     }
     case EDIT_ELEMENT: {
       const newState = {...state};
       newState.currentEditing = action.data.index;
-      // newState.blocks.map((elem, id)=>{
-      //   if (elem.properties.id === action.data.id) {
-      //     newState.currentEditing = id;
-      //   }
-      // });
       return newState;
     }
     case HIDE_DASHBOARD: {
@@ -31,8 +27,6 @@ export const reducer =  (state, action) => {
       newState.currentDragging = action.data.index;
       newState.blocks[action.data.index].properties.transx = action.data.point.x;
       newState.blocks[action.data.index].properties.transy = action.data.point.y;
-      // console.log('isDragging: ', newState.currentDragging)
-      // console.log('it has properties: ', newState.blocks[action.data.index]);
       return newState;
     }
     case MOVING_ELEMENT: {
@@ -46,8 +40,6 @@ export const reducer =  (state, action) => {
     case STOP_DRAGGING: {
       if (~state.currentDragging) {
         const newState = JSON.parse(JSON.stringify(state));
-        // const newState = {...state};
-        // newState.blocks = [...state.blocks];
         const current = newState.blocks[state.currentDragging];
         if (current.properties.x) {
           current.properties.x = parseInt(action.data.point.x) - parseInt(current.properties.transx) + parseInt(current.properties.x);

@@ -19,7 +19,6 @@ const initialCoordinates = {
 
 export const addElement = (nodeName, point, indexInArray) => {
   let id = `${indexInArray}_${nodeName}_${randomId()}`;
-
   return {
     type: ADD_ELEMENT,
     data: {
