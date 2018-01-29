@@ -30,7 +30,8 @@ export const addElement = (nodeName, point, indexInArray) => {
         id,
         isdragging: 'true',
         ...defaultProperties
-      }
+      },
+      text: 'TEXT'
     }
   }
 }

@@ -9,20 +9,17 @@ import {randomId} from '../blocks/helperFunctions';
 import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG} from './actions';
 
 const SVG_CANVAS_ID = 'mainSVGCanvas';
-const componentOfElement = (elementNodeName) => {
-  const elementObject = {
-    rect: {
-            component: Rectangle,
-          },
-    circle: {
-            component: Circle,
-          },
-    ellipse: {
-            component: Ellipse,
-          }
-  }
-  return elementObject[elementNodeName];
-};
+const componentOfElement = {
+  rect: {
+          component: Rectangle,
+        },
+  circle: {
+          component: Circle,
+        },
+  ellipse: {
+          component: Ellipse,
+        }
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -76,7 +73,7 @@ class SvgCanvas extends Component {
           onMouseUp={(evt)=>{this.mouseUpOnSVG(evt)}}>
         {this.props.blocks.map((element)=>{
           if (!element.properties.isdeleted) {
-            const Comp = componentOfElement(element.nodeName).component;
+            const Comp = componentOfElement[element.nodeName].component;
             return <Comp
               key={element.properties.id}
               {...element.properties}

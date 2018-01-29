@@ -6,7 +6,7 @@ import {changeStrokeColor, changeFillColor, changeText} from './actions';
 
 const mapStateToProps = (state) => ({
   isOpened: (~state.currentEditing),
-  currentStrokeColor: (~state.currentEditing) ? state.blocks[state.currentEditing].properties.stroke : '#ff0000',
+  currentStrokeColor: (~state.currentEditing) ? state.blocks[state.currentEditing].properties.stroke : '#000000',
   currentFillColor: (~state.currentEditing) ? state.blocks[state.currentEditing].properties.fill : '#ffffff'
 });
 
