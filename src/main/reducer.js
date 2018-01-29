@@ -27,7 +27,7 @@ export const reducer =  (state, action) => {
       return {...state, currentEditing: -1};
     }
     case SET_CURRENT_DRAGGING: {
-      const newState = {...state};
+      const newState = JSON.parse(JSON.stringify(state));
       newState.currentDragging = action.data.index;
       newState.blocks[action.data.index].properties.transx = action.data.point.x;
       newState.blocks[action.data.index].properties.transy = action.data.point.y;
@@ -37,7 +37,7 @@ export const reducer =  (state, action) => {
     }
     case MOVING_ELEMENT: {
       if (~state.currentDragging) {
-        const newState = {...state};
+        const newState = JSON.parse(JSON.stringify(state));
         const current = newState.blocks[state.currentDragging];
         current.properties.transform = `translate(${action.data.point.x - current.properties.transx}, ${action.data.point.y - current.properties.transy})`;
         return newState;
