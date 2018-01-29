@@ -1,5 +1,5 @@
 export const defaultProperties = {
-  fillOpacity: '0.3',
+  fillOpacity: '1',
   fill: "#ffffff",
   strokeLinejoin: "round",
   strokeLinecap: "round",

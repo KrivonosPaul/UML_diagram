@@ -53,7 +53,7 @@ export const reducer =  (state, action) => {
           current.properties.cy = parseInt(action.data.point.y) - parseInt(current.properties.transy) + parseInt(current.properties.cy);
         }
         delete current.properties.transform;
-        delete current.properties.isdragging;// = 'false';
+        delete current.properties.isdragging;
         newState.currentDragging = -1;
         return newState;
       }
@@ -77,6 +77,10 @@ export const reducer =  (state, action) => {
     }
     case CHANGE_TEXT: {
       const newState = JSON.parse(JSON.stringify(state));
+      if (~state.currentEditing) {
+        const current = newState.blocks[state.currentEditing];
+        current.text = action.data.text;
+      }
       return newState;
     }
     default: {
