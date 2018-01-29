@@ -31,23 +31,33 @@ export const reducer =  (state, action) => {
       newState.currentDragging = action.data.index;
       newState.blocks[action.data.index].properties.transx = action.data.point.x;
       newState.blocks[action.data.index].properties.transy = action.data.point.y;
+      // console.log('isDragging: ', newState.currentDragging)
+      // console.log('it has properties: ', newState.blocks[action.data.index]);
       return newState;
     }
     case MOVING_ELEMENT: {
       if (~state.currentDragging) {
         const newState = {...state};
         const current = newState.blocks[state.currentDragging];
-        current.transform = `translate(${action.data.point.x - current.properties.transx}, ${action.data.point.y - current.properties.transy})`;
+        current.properties.transform = `translate(${action.data.point.x - current.properties.transx}, ${action.data.point.y - current.properties.transy})`;
         return newState;
       }
     }
     case STOP_DRAGGING: {
       if (~state.currentDragging) {
-        const newState = {...state};
+        const newState = JSON.parse(JSON.stringify(state));
+        // const newState = {...state};
+        // newState.blocks = [...state.blocks];
         const current = newState.blocks[state.currentDragging];
-        current.properties.x = action.data.point.x - parseInt(current.properties.transx) + parseInt(current.properties.x);
-        current.properties.y = action.data.point.y - parseInt(current.properties.transy) + parseInt(current.properties.y);
-        current.transform = '';
+        if (current.properties.x) {
+          current.properties.x = parseInt(action.data.point.x) - parseInt(current.properties.transx) + parseInt(current.properties.x);
+          current.properties.y = parseInt(action.data.point.y) - parseInt(current.properties.transy) + parseInt(current.properties.y);
+        } else {
+          current.properties.cx = parseInt(action.data.point.x) - parseInt(current.properties.transx) + parseInt(current.properties.cx);
+          current.properties.cy = parseInt(action.data.point.y) - parseInt(current.properties.transy) + parseInt(current.properties.cy);
+        }
+        delete current.properties.transform;
+        current.properties.isdragging = 'false';
         newState.currentDragging = -1;
         return newState;
       }

@@ -9,33 +9,19 @@ import {randomId} from '../blocks/helperFunctions';
 import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG} from './actions';
 
 const SVG_CANVAS_ID = 'mainSVGCanvas';
-const blockElements = (element) => {
+const componentOfElement = (elementNodeName) => {
   const elementObject = {
     rect: {
             component: Rectangle,
-            properties: {
-              x:15,
-              y:73,
-            }
           },
     circle: {
             component: Circle,
-            properties: {
-              cx:60,
-              cy:218,
-            }
           },
     ellipse: {
             component: Ellipse,
-            properties: {
-              cx:60,
-              cy:303,
-            }
           }
   }
-  const prepared = elementObject[element.nodeName];
-  prepared.properties = {...prepared.properties, ...element.properties}
-  return prepared;
+  return elementObject[elementNodeName];
 };
 
 const mapStateToProps = (state) => {
@@ -46,9 +32,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   toggleEditing: (elementId) => dispatch(toggleEditing(elementId)),
-  mouseDownOnSVG: (elementId) => dispatch(mouseDownOnSVG(elementId)),
-  mouseMoveOnSVG: (elementId) => dispatch(mouseMoveOnSVG(elementId)),
-  mouseUpOnSVG: (elementId) => dispatch(mouseUpOnSVG(elementId))
+  mouseDownOnSVG: (elementId, point) => dispatch(mouseDownOnSVG(elementId, point)),
+  mouseMoveOnSVG: (point) => dispatch(mouseMoveOnSVG(point)),
+  mouseUpOnSVG: (elementId, point) => dispatch(mouseUpOnSVG(elementId, point))
 });
 
 class SvgCanvas extends Component {
@@ -68,13 +54,17 @@ class SvgCanvas extends Component {
     }
   }
   mouseDownOnSVG(evt){
-    this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+    if(evt.target.id !== SVG_CANVAS_ID) {
+      this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+    }
   }
   mouseMoveOnSVG(evt){
-    this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
+    if(evt.target.id !== SVG_CANVAS_ID) {
+      this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
+    }
   }
   mouseUpOnSVG(evt){
-    this.props.mouseMoveOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+    this.props.mouseUpOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
   }
 
   render() {
@@ -86,10 +76,10 @@ class SvgCanvas extends Component {
           onMouseUp={(evt)=>{this.mouseUpOnSVG(evt)}}>
         {this.props.blocks.map((element)=>{
           if (!element.properties.isdeleted) {
-            const Element = blockElements(element);
-            return <Element.component
+            const Comp = componentOfElement(element.nodeName).component;
+            return <Comp
               key={element.properties.id}
-              {...Element.properties}
+              {...element.properties}
               />
           }
         })}

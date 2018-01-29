@@ -6,11 +6,9 @@ const defaultProps = {
   ry: '30',
   cx: '50',
   cy: '235',
-  ...defaulAttributesEventHandlers()
+  // ...defaulAttributesEventHandlers()
 };
 
 export default (props) => {
   const newProps = reassignDefault(defaultProps, props);
-  return <ellipse
-  {...newProps}>
-</ellipse>;}
+  return <ellipse  {...newProps}></ellipse>;}

@@ -6,12 +6,10 @@ const defaultProps = {
   height: '90',
   x: '5',
   y: '5',
-  ...defaulAttributesEventHandlers()
+  // ...defaulAttributesEventHandlers()
 };
 
 export default (props) => {
   const newProps = reassignDefault(defaultProps, props);
-  return <rect
-  {...newProps}>
-  </rect>;
+  return <rect {...newProps}></rect>;
 }
