@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
+import ConnectingLine from '../blocks/ConnectingLine';
 import {addElement} from './actions';
 import {defaultProperties} from '../blocks/defaultProperties';
 
@@ -65,6 +66,7 @@ class BlockStore extends Component {
           <Rectangle {...this.StoreElementsDefaultProperties} />
           <Circle {...this.StoreElementsDefaultProperties} />
           <Ellipse {...this.StoreElementsDefaultProperties} />
+          <ConnectingLine />
         </svg>
       </div>
     </div>;

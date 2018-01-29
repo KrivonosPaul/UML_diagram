@@ -1,12 +1,11 @@
 import React, {Fragment} from 'react';
-import {reassignDefault, defaulAttributesEventHandlers} from '../helperFunctions';
+import {reassignDefault} from '../helperFunctions';
 
 const defaultProps = {
   rx: '50',
   ry: '30',
   cx: '50',
-  cy: '235',
-  // ...defaulAttributesEventHandlers()
+  cy: '235'
 };
 
 export default (props) => {

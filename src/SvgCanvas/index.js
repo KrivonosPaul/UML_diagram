@@ -72,6 +72,11 @@ class SvgCanvas extends Component {
           onMouseDown={(evt)=>{this.mouseDownOnSVG(evt)}}
           onMouseMove={(evt)=>{this.mouseMoveOnSVG(evt)}}
           onMouseUp={(evt)=>{this.mouseUpOnSVG(evt)}}>
+        <defs>
+          <marker id={"markerArrow"} markerWidth={"13"} markerHeight={"13"} refX={"2"} refY={"6"} orient={"auto"} markerUnits={"userSpaceOnUse"}>
+            <path d={"M2,2 L2,11 L10,6 L2,2"} style={{fill: '#000000'}} />
+          </marker>
+        </defs>
         {this.props.blocks.map((element)=>{
           if (!element.properties.isdeleted) {
             const Comp = componentOfElement[element.nodeName].component;

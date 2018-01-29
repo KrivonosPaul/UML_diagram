@@ -26,9 +26,6 @@
   border-radius: 0 20% 20% 0;
   cursor: pointer;
 }
-/*.toggleButton::after{
-  clear: both;
-}*/
 .clicked {
   margin-right: 5px;
   border-radius: 0;
