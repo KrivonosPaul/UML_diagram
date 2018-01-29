@@ -41,7 +41,7 @@ class BlockStore extends Component {
     this.setState({
       isOpened: !this.state.isOpened
     });
-    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}, this.props.nextIndex); // dispatched an action of addding Element onto canvas
+    this.props.addElement(evt.target.nodeName, {x: evt.clientX, y: evt.clientY}, this.props.nextIndex);
   }
 
   render() {
