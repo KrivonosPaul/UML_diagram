@@ -8,7 +8,7 @@ import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine';
 import Marker from '../blocks/Marker';
 import {randomId} from '../blocks/helperFunctions';
-import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG} from './actions';
+import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG, setInitialLinePoints} from './actions';
 
 const SVG_CANVAS_ID = 'mainSVGCanvas';
 const componentOfElement = {
@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch) => ({
   toggleEditing: (elementId) => dispatch(toggleEditing(elementId)),
   mouseDownOnSVG: (elementId, point) => dispatch(mouseDownOnSVG(elementId, point)),
   mouseMoveOnSVG: (point) => dispatch(mouseMoveOnSVG(point)),
-  mouseUpOnSVG: (elementId, point) => dispatch(mouseUpOnSVG(elementId, point))
+  mouseUpOnSVG: (elementId, point) => dispatch(mouseUpOnSVG(elementId, point)),
+  setInitialLinePoints: (point) => dispatch(setInitialLinePoints(point))
 });
 
 class SvgCanvas extends Component {
@@ -59,14 +60,15 @@ class SvgCanvas extends Component {
   mouseDownOnSVG(evt){
     if (this.props.isDrawingLine) {
       console.log('drawing line');
-      const startPoint = {x1: evt.clientX, y1: evt.clientY};
+      this.props.setInitialLinePoints({x1: evt.clientX, y1: evt.clientY});
     } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
     }
   }
   mouseMoveOnSVG(evt){
     if (this.props.isDrawingLine) {
-      console.log('drawing line');
+      console.log('moving line');
+      this.props.setInitialLinePoints({x2: evt.clientX, y2: evt.clientY});
     } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
     }
@@ -74,6 +76,7 @@ class SvgCanvas extends Component {
   mouseUpOnSVG(evt){
     if (this.props.isDrawingLine) {
       console.log('drawing line');
+      this.props.setInitialLinePoints({x2: evt.clientX, y2: evt.clientY}, true);
     } else {
       this.props.mouseUpOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
     }

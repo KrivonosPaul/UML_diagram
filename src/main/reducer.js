@@ -98,6 +98,11 @@ export const reducer =  (state, action) => {
       newState.isSettingLinesPoints = action.data.id;
       return newState;
     }
+    case PAINTING_LINE: {
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.isSettingLinesPoints = {...state.isSettingLinesPoints, action.data.point};
+      return newState;
+    }
     default: {
       return state;
     }

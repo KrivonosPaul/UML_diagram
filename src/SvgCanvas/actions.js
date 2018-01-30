@@ -2,7 +2,8 @@ import {EDIT_ELEMENT,
   HIDE_DASHBOARD,
   SET_CURRENT_DRAGGING,
   MOVING_ELEMENT,
-  STOP_DRAGGING} from '../main/reducer';
+  STOP_DRAGGING,
+  PAINTING_LINE} from '../main/reducer';
 
 /*ACTION CREATORS*/
 export const toggleEditing = (elementId) => {
@@ -44,6 +45,16 @@ export const mouseUpOnSVG = (elementId, point) => {
     data: {
       index: elementId.split('_')[0],
       point
+    }
+  };
+}
+
+export const setInitialLinePoints = (point, isEnd) => {
+  return {
+    type: PAINTING_LINE,
+    data: {
+      point,
+      isEnd
     }
   };
 }
