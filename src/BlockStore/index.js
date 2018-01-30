@@ -6,7 +6,8 @@ import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine';
-import {addElement} from './actions';
+import Marker from '../blocks/Marker';
+import {addElement, startCreatingConnection} from './actions';
 import {defaultProperties} from '../blocks/defaultProperties';
 
 
@@ -17,7 +18,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addElement: (nodeName, point, nextIndex) => dispatch(addElement(nodeName, point, nextIndex))
+  addElement: (nodeName, point, nextIndex) => dispatch(addElement(nodeName, point, nextIndex)),
+  startCreatingConnection: (index) => dispatch(startCreatingConnection(index))
 });
 
 class BlockStore extends Component {
@@ -32,7 +34,7 @@ class BlockStore extends Component {
     };
   }
 
-  toggleBlockStore(evt){
+  toggleBlockStore(){
     this.setState({
       isOpened: !this.state.isOpened
     });
@@ -63,10 +65,13 @@ class BlockStore extends Component {
       </div>
       <div className={Styles.previewZone}>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" svgjs="http://svgjs.com/svgjs" className={Styles.svgPreviewBox}>
+          <defs>
+            <Marker />
+          </defs>
           <Rectangle {...this.StoreElementsDefaultProperties} />
           <Circle {...this.StoreElementsDefaultProperties} />
           <Ellipse {...this.StoreElementsDefaultProperties} />
-          <ConnectingLine />
+          <ConnectingLine strokeWidth={4} onClick={() => {this.toggleBlockStore(); this.props.startCreatingConnection(this.props.nextIndex)}}/>
         </svg>
       </div>
     </div>;

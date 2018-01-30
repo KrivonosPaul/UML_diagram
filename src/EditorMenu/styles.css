@@ -4,6 +4,7 @@
   padding-left: 10px;
   padding-right: 10px;
   left: 50%;
+  min-width: 440px;
   transform: translate(-50%);
   border-radius: 0 0 10px 10px;
   top: -40px;

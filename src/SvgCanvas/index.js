@@ -6,25 +6,30 @@ import Rectangle from '../blocks/Rectangle';
 import Circle from '../blocks/Circle';
 import Ellipse from '../blocks/Ellipse';
 import ConnectingLine from '../blocks/ConnectingLine';
+import Marker from '../blocks/Marker';
 import {randomId} from '../blocks/helperFunctions';
 import {toggleEditing, mouseDownOnSVG, mouseMoveOnSVG, mouseUpOnSVG} from './actions';
 
 const SVG_CANVAS_ID = 'mainSVGCanvas';
 const componentOfElement = {
   rect: {
-          component: Rectangle,
+          component: Rectangle
         },
   circle: {
-          component: Circle,
+          component: Circle
         },
   ellipse: {
-          component: Ellipse,
-        }
+          component: Ellipse
+        },
+  line: {
+    component: ConnectingLine
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    blocks: state.blocks
+    blocks: state.blocks,
+    isDrawingLine: state.isSettingLinesPoints
   }
 };
 
@@ -43,7 +48,7 @@ class SvgCanvas extends Component {
     this.mouseMoveOnSVG = this.mouseMoveOnSVG.bind(this);
     this.mouseUpOnSVG = this.mouseUpOnSVG.bind(this);
   }
-
+/*TODO new events for svg to draw line*/
   toggleDashboard(evt){
     if(evt.target.id !== SVG_CANVAS_ID) {
       this.props.toggleEditing(evt.target.id);
@@ -52,17 +57,26 @@ class SvgCanvas extends Component {
     }
   }
   mouseDownOnSVG(evt){
-    if(evt.target.id !== SVG_CANVAS_ID) {
+    if (this.props.isDrawingLine) {
+      console.log('drawing line');
+      const startPoint = {x1: evt.clientX, y1: evt.clientY};
+    } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
     }
   }
   mouseMoveOnSVG(evt){
-    if(evt.target.id !== SVG_CANVAS_ID) {
+    if (this.props.isDrawingLine) {
+      console.log('drawing line');
+    } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
     }
   }
   mouseUpOnSVG(evt){
-    this.props.mouseUpOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+    if (this.props.isDrawingLine) {
+      console.log('drawing line');
+    } else {
+      this.props.mouseUpOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
+    }
   }
 
   render() {
@@ -78,7 +92,7 @@ class SvgCanvas extends Component {
           </marker>
         </defs>
         {this.props.blocks.map((element)=>{
-          if (!element.properties.isdeleted) {
+          if (!element.isdeleted) {
             const Comp = componentOfElement[element.nodeName].component;
             return <Comp
               key={element.properties.id}

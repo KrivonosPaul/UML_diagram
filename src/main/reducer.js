@@ -8,6 +8,7 @@ export const CHANGE_STROKE_COLOR = 'CHANGE_STROKE_COLOR';
 export const CHANGE_FILL_COLOR = 'CHANGE_FILL_COLOR';
 export const CHANGE_TEXT = 'CHANGE_TEXT';
 export const DELETE_BLOCK = 'DELETE_BLOCK';
+export const SET_POINTS_FOR_LINE = 'SET_POINTS_FOR_LINE';
 
 export const reducer =  (state, action) => {
   switch (action.type) {
@@ -87,9 +88,14 @@ export const reducer =  (state, action) => {
       const newState = JSON.parse(JSON.stringify(state));
       if (~state.currentEditing) {
         const current = newState.blocks[state.currentEditing];
-        current.properties.isdeleted = 'true';
+        current.isdeleted = 'true';
         newState.currentEditing = -1;
       }
+      return newState;
+    }
+    case SET_POINTS_FOR_LINE: {
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.isSettingLinesPoints = action.data.id;
       return newState;
     }
     default: {

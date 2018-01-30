@@ -1,4 +1,4 @@
-import {ADD_ELEMENT} from '../main/reducer';
+import {ADD_ELEMENT, SET_POINTS_FOR_LINE} from '../main/reducer';
 import {randomId} from '../blocks/helperFunctions';
 import {defaultProperties} from '../blocks/defaultProperties';
 
@@ -38,4 +38,14 @@ export const addElement = (nodeName, point, indexInArray) => {
       text: ''
     }
   }
+}
+
+export const startCreatingConnection = (indexInArray) => {
+  const id = `${indexInArray}_line_${randomId()}`;
+  return {
+    type: SET_POINTS_FOR_LINE,
+    data: {
+      id
+    }
+  };
 }
