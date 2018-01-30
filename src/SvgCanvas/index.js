@@ -59,15 +59,14 @@ class SvgCanvas extends Component {
   }
   mouseDownOnSVG(evt){
     if (this.props.isDrawingLine) {
-      console.log('drawing line');
+      console.log('setting initial position');
       this.props.setInitialLinePoints({x1: evt.clientX, y1: evt.clientY});
     } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseDownOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
     }
   }
   mouseMoveOnSVG(evt){
-    if (this.props.isDrawingLine) {
-      console.log('moving line');
+    if (this.props.isDrawingLine && this.props.isDrawingLine.properties.x1) {
       this.props.setInitialLinePoints({x2: evt.clientX, y2: evt.clientY});
     } else if (evt.target.id !== SVG_CANVAS_ID) {
       this.props.mouseMoveOnSVG({x: evt.clientX, y: evt.clientY});
@@ -75,7 +74,6 @@ class SvgCanvas extends Component {
   }
   mouseUpOnSVG(evt){
     if (this.props.isDrawingLine) {
-      console.log('drawing line');
       this.props.setInitialLinePoints({x2: evt.clientX, y2: evt.clientY}, true);
     } else {
       this.props.mouseUpOnSVG(evt.target.id, {x: evt.clientX, y: evt.clientY});
@@ -104,6 +102,11 @@ class SvgCanvas extends Component {
               />
           }
         })}
+        {(() => {
+          console.log('isDrawingLine', this.props.isDrawingLine);
+          return this.props.isDrawingLine ? <ConnectingLine {...this.props.isDrawingLine.properties} id={this.props.isDrawingLine.id}/> : '';
+          })()
+        }
       </svg>
     );
   }

@@ -9,6 +9,7 @@ export const CHANGE_FILL_COLOR = 'CHANGE_FILL_COLOR';
 export const CHANGE_TEXT = 'CHANGE_TEXT';
 export const DELETE_BLOCK = 'DELETE_BLOCK';
 export const SET_POINTS_FOR_LINE = 'SET_POINTS_FOR_LINE';
+export const PAINTING_LINE = 'PAINTING_LINE';
 
 export const reducer =  (state, action) => {
   switch (action.type) {
@@ -95,12 +96,22 @@ export const reducer =  (state, action) => {
     }
     case SET_POINTS_FOR_LINE: {
       const newState = JSON.parse(JSON.stringify(state));
-      newState.isSettingLinesPoints = action.data.id;
+      newState.isSettingLinesPoints = {
+        id: action.data.id,
+        properties: {}
+      };
       return newState;
     }
     case PAINTING_LINE: {
       const newState = JSON.parse(JSON.stringify(state));
-      newState.isSettingLinesPoints = {...state.isSettingLinesPoints, action.data.point};
+      newState.isSettingLinesPoints = {...state.isSettingLinesPoints, properties: {...state.isSettingLinesPoints.properties, ...action.data.point}};
+      if (!newState.isSettingLinesPoints.properties.x2) {
+        newState.isSettingLinesPoints.properties.x2 = action.data.point.x1;
+        newState.isSettingLinesPoints.properties.y2 = action.data.point.y1;
+      }
+      if (action.data.isEnd) {
+// TODO create new element in block array. erase data from isSettingLinesPoints
+      }
       return newState;
     }
     default: {
